@@ -1,0 +1,54 @@
+[
+    {
+        "label": "Admin",
+        "color": "blue"
+    },
+    {
+        "label": "Commercial",
+        "color": "purple"
+    },
+    {
+        "label": "Corporate Communications",
+        "color": "cyan"
+    },
+    {
+        "label": "Engineering",
+        "color": "green"
+    },
+    {
+        "label": "Finance",
+        "color": "magenta"
+    },
+    {
+        "label": "HSS SEA",
+        "color": "pink"
+    },
+    {
+        "label": "Human Resource",
+        "color": "red"
+    },
+    {
+        "label": "Infocomm Technology",
+        "color": "orange"
+    },
+    {
+        "label":  "Internship",
+        "color": "yellow"
+    },
+    {
+        "label":  "Management Associate",
+        "color": "volcano"
+    },
+    {
+        "label": "Operations",
+        "color": "geekblue"
+    },
+    {
+        "label": "Procurement",
+        "color": "lime"
+    },
+    {
+        "label": "Scholarship",
+        "color": "gold"
+    }
+]
