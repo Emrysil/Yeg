@@ -3,7 +3,7 @@ import _ from "lodash";
 export const getTokenLocalStorage = () => {
     if (typeof window !== 'undefined') {
         const jwtToken = localStorage.getItem('jwt-token');
-        return jwtToken ? JSON.parse(jwtToken) : null;
+        return jwtToken ? jwtToken : null;
     } else {
       return null;
     }
@@ -11,7 +11,7 @@ export const getTokenLocalStorage = () => {
 
 export const setTokensLocalStorage = (token: string) => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('jwt-token', JSON.stringify(token));
+      localStorage.setItem('jwt-token',token);
     }
 };
 
