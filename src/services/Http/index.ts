@@ -1,5 +1,5 @@
 import { stringify } from "querystring"
-const BaseUrl = "http://localhost:80"
+const BaseUrl = "http://localhost"
 
 export const Http = {
     Request: async <A>(
