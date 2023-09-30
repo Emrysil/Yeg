@@ -1,4 +1,5 @@
-import { Button, ConfigProvider, Form, Input } from 'antd'
+import { Button, ConfigProvider, Form, Input, notification } from 'antd'
+import type { NotificationPlacement } from 'antd/es/notification/interface';
 import { Icon } from '@iconify/react';
 import { motion } from 'framer-motion';
 import { AuthService } from '@/services/Restful/auth';
@@ -7,12 +8,26 @@ interface ILogin {
     toSignup: () => void;
 }
 const Login: React.FC<ILogin> = ({toSignup}) => {
+    const [api, contextHolder] = notification.useNotification();
+    const openNotification = (placement: NotificationPlacement) => {
+        api.info({
+          message: <span className='font-rowdis'>Login Failed...</span>,
+          placement,
+          icon: <Icon icon="ic:outline-error" className='text-red-700'/>,
+        });
+      };
     const router = useRouter();
     const handlSubmitForm = async (value: any) => {
-        await AuthService.login(value);
-        router.push("/jobs");
+        try {
+            await AuthService.login(value);
+            router.push("/jobs");
+        } catch (err) {
+            openNotification('topRight');
+        }
       }
     return (
+        <>
+        {contextHolder}
         <motion.div 
             className='flex flex-col items-start gap-4'
             initial={{ x: 10, opacity: 0}}
@@ -69,6 +84,7 @@ const Login: React.FC<ILogin> = ({toSignup}) => {
                 <Icon icon="majesticons:arrow-right" className='text-lg'/>
             </div>
         </motion.div>
+        </>
     )
 };
 

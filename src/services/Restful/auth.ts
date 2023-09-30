@@ -1,7 +1,7 @@
 import { Http } from "../Http";
 
 export const AuthService = {
-    login: async (payload: any): Promise<IAuthResponse | void> => {
+    login: async (payload: any): Promise<IAuthResponse | any> => {
         try {
             let res: IAuthResponse;
             res = await Http.Request<IAuthResponse>('POST', '/login', null, payload);
@@ -9,17 +9,17 @@ export const AuthService = {
             return res;
         } catch (err) {
             console.log(err);
-            return;
+            return err;
         }
     },
-    signup: async (payload: any): Promise<Omit<IAuthResponse, 'authorization'> | void> => {
+    signup: async (payload: any): Promise<Omit<IAuthResponse, 'authorization'> | any> => {
         try {
             let res: IAuthResponse;
             res = await Http.Request('POST', '/signUp', null, payload);
             return res;
         } catch (err) {
             console.log(err);
-            return;
+            return err;
         }
     },
 }
