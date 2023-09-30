@@ -35,7 +35,6 @@ export default function RootLayout({
   const pathname = usePathname();
   const handleNewUserVisit = () => {
     const token = localStorage.getItem('jwt-token');
-    console.log(token);
     if (!token && pathname !== '/') {
       router.push("/");
     }
