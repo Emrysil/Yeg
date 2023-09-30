@@ -173,9 +173,6 @@ def match_candidates():
         if not validation["success"]:
             return json.dumps(validation), 401
         job_id = request.args.get("id")
-        '''
-        add parameters to be loaded here
-        '''
         conn = mariadb.connect(**config)
         cur = conn.cursor()
         candidates = []
@@ -202,9 +199,5 @@ def match_candidates():
         print(f"Error: {Error}")
         return json.dumps({"success": False, "message": "Bad Request Parameters!"}), 500
 
-    '''
-    add other functionality here
-    '''
     ranked_candidates = match(candidates, curr_job)
-    return ranked_candidates
-    # return json.dumps({"success": False, "message": "Not Implemented Yet!"}), 500
+    return json.dumps({"success": True, "data": ranked_candidates})
