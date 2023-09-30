@@ -184,7 +184,7 @@ def match_candidates():
                 "id": entry[0],
                 "name": entry[1],
                 "gender": entry[2],
-                "birthyear": entry[3],
+                "birthYear": entry[3],
                 "education": entry[4],
                 "skillSet": entry[5]
             })
