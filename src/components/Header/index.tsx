@@ -2,8 +2,15 @@
 import Image from "next/image";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useRouter } from "next/navigation";
+import { useMemo } from "react";
 const Header = () => {
-    const isLogged = localStorage.getItem('jwt-token') !== null;
+    const isLogged = useMemo(() => {
+        if (window) {
+            return localStorage.getItem('jwt-token') !== null;
+        } else {
+            return null;
+        }
+    }, [window]);
     const router = useRouter();
     const handleLogout = () => {
         localStorage.removeItem('jwt-token');
