@@ -1,11 +1,10 @@
 import categories from "@/data/jobCategories.json";
-import { Menu, MenuProps } from "antd"
-import { JobService } from "@/services/Restful/jobs";
+import { Menu, MenuProps, Select } from "antd"
 type MenuItem = Required<MenuProps>['items'][number];
 interface ICategoryMenu {
-    setJobs: (j: IJob[]) => void;
+    setCategory: (category: string) => void;
 }
-const CategoryMenu: React.FC<ICategoryMenu> = ({setJobs}) => {
+const CategoryMenu: React.FC<ICategoryMenu> = ({setCategory}) => {
     function getItem(
         label: React.ReactNode,
         key: React.Key,
@@ -21,11 +20,28 @@ const CategoryMenu: React.FC<ICategoryMenu> = ({setJobs}) => {
           type,
         } as MenuItem;
       }
-    const items: MenuItem[] = categories.map(cat => getItem(cat.label, cat.label))
+    const menuItems: MenuItem[] = categories.map(cat => getItem(cat.label, cat.label));
+    const selectItems = categories.map(cat => ({value: cat.label, label: cat.label}));
     const handleMenuSelection = async ({ key }: {key: string}) => {
-        const res = await JobService.getJobs({category: key});
-        setJobs(res);
+        setCategory(key);
     }
-    return <Menu mode="inline" theme="dark" items={items} className="rounded-lg" onClick={handleMenuSelection}/>
+    return (
+      <>
+        <Menu 
+            mode="inline" 
+            theme="dark" 
+            items={menuItems} 
+            defaultSelectedKeys={["All"]}
+            className="rounded-lg hidden sm:block sticky top-40" 
+            onClick={handleMenuSelection}
+        />
+        <Select 
+          placeholder="Select Job Category" 
+          onChange={handleMenuSelection} 
+          options={selectItems}
+          className="sm:hidden block"
+        />
+      </>
+    )
 };
 export default CategoryMenu;

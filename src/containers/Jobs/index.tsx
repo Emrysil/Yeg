@@ -1,64 +1,125 @@
-import {ConfigProvider, Form, Input, Menu, MenuProps } from "antd"
+import {Button, ConfigProvider, Form, Input, Card, Empty} from "antd"
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useState, useEffect } from "react"
 import JobCard from "./components/JobCard";
+import { JobService } from "@/services/Restful/jobs";
 import CategoryMenu from "./components/CategoryMenu";
+import _ from "lodash";
 const JobsContainer = () => {
-    const [jobs, setJobs] = useState<IJob[]>([] as IJob[]);
-    
+    const [jobs, setJobs] = useState<IJob[] | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+    const defaultParams: IJobSearchParams = {
+        category: "",
+        search: "",
+        sorted: "",
+    };
+    const [params, setParams] = useState<IJobSearchParams>(defaultParams);
+    const handleGetJobs = async (params: IJobSearchParams) => {
+        setLoading(true);
+        const res = await JobService.getJobs(params);
+        setJobs(res);
+        setLoading(false);
+    };
+
+    const handleSearch = (val: any) => {
+        setParams(prev => ({...prev, ...val}));
+        console.log(params);
+    }
+
+    const handleSort = (val: IJobSearchParams['sorted']) => {
+        setParams(prev => ({...prev, sorted: val}));
+    }
+
+    const handleResetFilter = () => {
+        setParams(defaultParams);
+    }
     useEffect(() => {
-        setJobs([{
-            id: 1,
-            name: 'UX Technical Lead and Designer',
-            link: '/en/job/492603/ux-technical-lead-and-designer',
-            type: 'Infocomm Technology',
-            closing: '2023-10-31T09:30:00Z',
-            description: 'Possess a degree in any discipline. 2 years of UX design experience. Preference will be given to candidates who have experience designing large and complex systems. Expertise in designing tools like Sketch, InVision, Adobe Photoshop, Adobe Illustrator Understands the UX development lifecycle from supporting product conceptualisation to information architecture and user usability research to wireframing and eventual delivery Awareness of user experience trade-offs and interactions optimisation to translate conceptual requirements to sustainable designs Excellent communication, stakeholder management and presentation skills Candidates with prior domain experience in logistics or shipping related applications will have an added advantage Familiarity with the following front-end development technologies is a plus  HTML5 & CSS  JavaScript (JQuery, D3, Angular/Angular2)  Springboot development framework  Mobile development with Android or iOS and related UX design considerations'
-        }])
+        handleGetJobs(params);
+    }, [params]);
+
+    useEffect(() => {
+        handleGetJobs(defaultParams);
     }, []);
     return (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center gap-5">
                 <div className="w-full">
-                    <ConfigProvider theme={{
-                        components: {
-                            Input: {
-                                colorBgContainer: 'transparent',
-                                colorText: 'white',
-                                colorTextPlaceholder: 'rgba(225, 225, 225, 0.7)'
-                            },
-                        }
-                    }}>
-                        <Form>
-                            <Form.Item name="search">
-                                <Input
-                                    allowClear
-                                    autoComplete="off"
-                                    prefix={<Icon icon="iconamoon:search-fill" className="text-primary-100"/>}
-                                    size="large"
-                                    className="h-12 text-lg"
-                                    placeholder="Find suitable candidate for ...."
-                                />
-                            </Form.Item>
-                        </Form>
-                    </ConfigProvider>
+                   <div className="flex gap-2 flex-wrap">
+                        <ConfigProvider theme={{
+                            components: {
+                                Input: {
+                                    colorBgContainer: 'transparent',
+                                    colorText: 'white',
+                                    colorTextPlaceholder: 'rgba(225, 225, 225, 0.7)'
+                                },
+                            }
+                        }}>
+                            <Form onFinish={handleSearch} layout="inline" className="grow">
+                                <Form.Item name="search" className="w-full">
+                                    <Input
+                                        allowClear
+                                        autoComplete="off"
+                                        prefix={<Icon icon="iconamoon:search-fill" className="text-primary-100"/>}
+                                        size="large"
+                                        className="h-12 text-lg"
+                                        placeholder="Find suitable candidate for ...."
+                                    />
+                                </Form.Item>
+
+                            </Form>
+                        </ConfigProvider>
+                        <div className="flex gap-2">
+                            <div>
+                                <Button className="h-full" onClick={() => handleSort('ASC')} >
+                                    <Icon icon="bi:sort-up" className="text-primary-100 text-[24px]"/>
+                                </Button>
+                            </div>
+                            <div>
+                                <Button className="h-full" onClick={() => handleSort('DESC')} >
+                                    <Icon icon="bi:sort-down" className="text-primary-100 text-[24px]"/>
+                                </Button>
+                            </div>
+                            <div>
+                                <Button className="h-full" onClick={handleResetFilter} >
+                                    <div className="flex items-center gap-1">
+                                        <Icon icon="grommet-icons:clear" className="text-primary-100 text-[24px]"/>
+                                        <span className="text-primary-100 text-[14px] font-rowdis">Clear Filter</span>
+                                    </div>
+                                </Button>
+                            </div>
+                        </div>
+                   </div>
                 </div>
                 <div className="w-full">
-                    <div className="flex gap-10">
+                    <div className="flex sm:flex-row flex-col gap-10">
                         <div className="grow-0">
-                            <CategoryMenu setJobs={setJobs}/>
+                            <CategoryMenu setCategory={(cat: string) => setParams(prev => ({...prev, category: cat}))} />
                         </div>
-                        <div className="flex flex-col grow">
+                        <div className="flex flex-col grow gap-4">
                             {
-                                jobs.map((job: IJob) => 
-                                    <JobCard 
-                                        key={job.id}
-                                        id={job.id}
-                                        name={job.name} 
-                                        type={job.type}
-                                        link={job.link}
-                                        description={job.description}
-                                        closing={job.closing}
-                                    />
+                                loading 
+                                ? (
+                                    jobs 
+                                    ? (
+                                        jobs.map((job: IJob) => 
+                                            <JobCard 
+                                                key={job.id}
+                                                id={job.id}
+                                                name={job.name} 
+                                                type={job.type}
+                                                link={job.link}
+                                                description={job.description}
+                                                closing={job.closing}
+                                            />
+                                        )
+                                        ) : (
+                                            <div className="w-full p-10 rounded-lg" style={{backgroundColor: 'rgba(225, 225, 225, 0.7)'}}>
+                                                <Empty className="text-lg  font-rowdis"/>
+                                            </div>
+                                        )
+                                    ) : (
+                                        _.fill(Array(5), 1).map((x, index) => 
+                                            <Card key={index} style={{width: '100%'}} loading/>
+                                    )
                                 )
                             }
                         </div>

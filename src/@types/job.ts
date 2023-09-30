@@ -9,6 +9,23 @@ interface IJob {
 
 interface IJobsResponse {
     success: boolean,
-    message: string,
+    message?: string,
+    length?: number,
     data: IJob[],
+}
+
+interface IJobSearchParams {
+    category?: string;
+    search?: string;
+    sorted?: 'ASC' | 'DESC' | "";
+}
+
+interface IJobDetailRequest {
+    id: number;
+}
+
+interface IJobDetailResponse {
+    success: boolean,
+    message?: string,
+    data: IJob;
 }

@@ -1,5 +1,9 @@
 [
     {
+        "label": "All",
+        "color": "black"
+    },
+    {
         "label": "Admin",
         "color": "blue"
     },

@@ -43,9 +43,9 @@ export default function RootLayout({
       <body className={`${plex_sans.variable} ${rowdies.variable} ${vt323.variable}`}>
         <div 
           className='flex flex-col gap-10 min-h-screen items-center w-full bg-background-200 text-primary-100 bg-no-repeat' 
-          style={{backgroundImage: "url(/assets/images/bg.jpg)"}}>
+          style={{backgroundImage: "url(/assets/images/bg.jpg)", backgroundAttachment: 'fixed'}}>
           <Header />
-          <div className='px-10 w-full'>
+          <div className='px-10 w-full mt-40'>
             <div className='max-w-[1392px] w-full pb-40 m-auto'>
               {children}
             </div>

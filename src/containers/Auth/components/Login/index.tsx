@@ -2,7 +2,7 @@ import { Button, ConfigProvider, Form, Input } from 'antd'
 import { Icon } from '@iconify/react';
 import { motion } from 'framer-motion';
 import { AuthService } from '@/services/Restful/auth';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 interface ILogin {
     toSignup: () => void;
 }

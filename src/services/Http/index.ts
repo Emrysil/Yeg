@@ -10,14 +10,23 @@ export const Http = {
     ): Promise<A> => {
         return new Promise((resolve, reject) => {
             const query: any = params ? `?${stringify({...params})}`: "";
-            const options: any = {
+            const options: RequestInit = {
                 body: payload && JSON.stringify(payload),
                 cache: "no-cache",
                 method: methodType,
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                mode: 'cors'
+                mode: 'cors',
+            
+            }
+            const token = localStorage.getItem('jwt-token');
+            if (token) {
+                options.headers = {
+                    "Content-Type": "application/json",
+                    Authorization: token
+                }
+            } else {
+                options.headers = {
+                    "Content-Type": "application/json",
+                }
             }
             fetch(`${BaseUrl}${url}${query}`, {
                 ...options
