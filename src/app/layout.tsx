@@ -1,8 +1,12 @@
+'use client'
 import './globals.css';
 import type { Metadata } from 'next';
 import { Rowdies, VT323, IBM_Plex_Sans } from 'next/font/google';
 import Header from '@/components/Header';
 import Head from 'next/head';
+import { useEffect } from 'react';
+import { useRouter, usePathname } from 'next/navigation';
+import path from 'path';
 const rowdies = Rowdies({
   weight: '400', 
   subsets: ['latin'],
@@ -21,17 +25,24 @@ const plex_sans = IBM_Plex_Sans({
   display: 'swap',
   variable: '--font-ibm-plex-sans',
 })
-export const metadata: Metadata = {
-  title: 'PSA-Yeg Talent Acquisition System',
-  description: 'Discover the Best Talent',
-  
-}
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const handleNewUserVisit = () => {
+    const token = localStorage.getItem('jwt-token');
+    console.log(token);
+    if (!token && pathname !== '/') {
+      router.push("/");
+    }
+  };
+  useEffect(() => {
+    handleNewUserVisit();
+  }, [])
   return (
     <html lang="en">
       <Head>

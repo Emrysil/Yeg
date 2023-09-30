@@ -1,5 +1,6 @@
 import categories from "@/data/jobCategories.json";
-import { Menu, MenuProps, Select } from "antd"
+import { Menu, MenuProps, Select } from "antd";
+import { useState } from "react";
 type MenuItem = Required<MenuProps>['items'][number];
 interface ICategoryMenu {
     setCategory: (category: string) => void;
@@ -19,11 +20,17 @@ const CategoryMenu: React.FC<ICategoryMenu> = ({setCategory}) => {
           label,
           type,
         } as MenuItem;
-      }
+      };
+    const [selectedKeys, setSelectedKeys] = useState<string[]>(['All']);
     const menuItems: MenuItem[] = categories.map(cat => getItem(cat.label, cat.label));
     const selectItems = categories.map(cat => ({value: cat.label, label: cat.label}));
     const handleMenuSelection = async ({ key }: {key: string}) => {
+      setSelectedKeys([key]);
+      if (key !== 'All') {
         setCategory(key);
+      } else {
+        setCategory("");
+      }
     }
     return (
       <>
@@ -31,7 +38,8 @@ const CategoryMenu: React.FC<ICategoryMenu> = ({setCategory}) => {
             mode="inline" 
             theme="dark" 
             items={menuItems} 
-            defaultSelectedKeys={["All"]}
+            // defaultSelectedKeys={["All"]}
+            selectedKeys={selectedKeys}
             className="rounded-lg hidden sm:block sticky top-40" 
             onClick={handleMenuSelection}
         />
