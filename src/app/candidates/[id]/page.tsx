@@ -8,16 +8,24 @@ const CandidatePage = ({params}: {params: {id: number}}) => {
     const [candidates, setCandidates] = useState<ICandidate[] | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const getJob = async (id: number) => {
-        setLoading(true);
-        const res = await JobService.getJob({id: id});
-        setJob(res as IJob);
-        setLoading(false);
+        try {
+            setLoading(true);
+            const res = await JobService.getJob({id: id});
+            setJob(res as IJob);
+            setLoading(false);
+        } catch (err) {
+            setJob(null);
+        }
     };
     const getCandidates = async (id: number) => {
-        setLoading(true);
-        const res = await CandidateService.getMatchingCandidates({id: id});
-        setCandidates(res as ICandidate[]);
-        setLoading(false);
+        try {
+            setLoading(true);
+            const res = await CandidateService.getMatchingCandidates({id: id});
+            setCandidates(res as ICandidate[]);
+            setLoading(false);
+        } catch (err) {
+            setCandidates(null);
+        }
     }
     useEffect(() => {
         

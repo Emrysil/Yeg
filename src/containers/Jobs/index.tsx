@@ -15,10 +15,14 @@ const JobsContainer = () => {
     };
     const [params, setParams] = useState<IJobSearchParams>(defaultParams);
     const handleGetJobs = async (params: IJobSearchParams) => {
-        setLoading(true);
-        const res = await JobService.getJobs(params);
-        setJobs(res);
-        setLoading(false);
+        try {
+            setLoading(true);
+            const res = await JobService.getJobs(params);
+            setJobs(res);
+            setLoading(false);
+        } catch (err) {
+            setJobs(null);
+        }
     };
 
     const handleSearch = (val: any) => {
