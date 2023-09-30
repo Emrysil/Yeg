@@ -3,13 +3,17 @@ import Image from "next/image";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useRouter } from "next/navigation";
 import { isAuth, clearLocalStorage } from "@/common/utils/storage";
+import { useState, useEffect } from "react";
 const Header = () => {
-    const isLogged = isAuth();
+    const [isLogged, setIsLogged] = useState<boolean>(false);
     const router = useRouter();
     const handleLogout = () => {
         clearLocalStorage();
         router.replace("/");
     };
+    useEffect(() => {
+        setIsLogged(isAuth());
+    }, []);
     return (
         <div className="h-32 w-full bg-background-100 flex px-10 fixed top-0 z-50">
             <div className="w-full max-w-[1392px] m-auto">

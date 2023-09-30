@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import Head from 'next/head';
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import { isAuth } from '@/common/utils/storage';
 const rowdies = Rowdies({
   weight: '400', 
   subsets: ['latin'],
@@ -31,9 +32,10 @@ export default function RootLayout({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const isLogged = isAuth();
   const handleNewUserVisit = () => {
     const token = localStorage.getItem('jwt-token');
-    if (!token && pathname !== '/') {
+    if (!isLogged && pathname !== '/') {
       router.push("/");
     }
   };
@@ -59,7 +61,7 @@ export default function RootLayout({
             </div>
           </div>
         </div>
-        </body>
+      </body>
     </html>
   )
 }
