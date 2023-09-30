@@ -2,7 +2,6 @@ import { Badge, Card, Collapse } from "antd"
 import Link from "next/link";
 import categories from "@/data/jobCategories.json"
 import { Icon } from "@iconify/react/dist/iconify.js";
-
 const JobCard: React.FC<IJob> = ({id, name, link, description, type, closing}) => {
     const ribbonColor = categories.find(cat => cat.label === type)?.color;
     const requirementProcessed: string[] = description.split('.');
@@ -32,7 +31,7 @@ const JobCard: React.FC<IJob> = ({id, name, link, description, type, closing}) =
                             <Icon icon="formkit:fastforward"/>
                         </div>
                     </Link>
-                    <Link href={`/candidates/${id}`} replace className="font-rowdis text-secondary-100">
+                    <Link href={`/candidates/${id}`} className="font-rowdis text-secondary-100">
                         <div className="flex items-center gap-2">
                             <span>Check Out Matching Candidates</span>
                             <Icon icon="formkit:fastforward"/>

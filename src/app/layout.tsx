@@ -6,7 +6,6 @@ import Header from '@/components/Header';
 import Head from 'next/head';
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-import path from 'path';
 const rowdies = Rowdies({
   weight: '400', 
   subsets: ['latin'],
