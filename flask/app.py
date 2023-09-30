@@ -160,7 +160,44 @@ def list_jobs():
     except Exception as Error:
         print(f"Error: {Error}")
         return json.dumps({"success": False, "message": "Internal Server Error!"}), 500
-
+    
+@app.route('/job', methods=['GET'])
+def get_job_by_id():
+    # Parse parameters
+    try:
+        token = request.headers.get('Authorization')
+        job_id = request.args.get("id")
+    except Exception as Error:
+        print(f"Error: {Error}")
+        return json.dumps({"success": False, "message": "Bad Request Parameters!"}), 500
+    # Parse token
+    validation = validate_token(token)
+    if not validation["success"]:
+        return json.dumps(validation), 401
+    # Fetch employee
+    try:
+        conn = mariadb.connect(**config)
+        cur = conn.cursor()
+        cur.execute(f"SELECT * FROM jobs WHERE jobid=?", [job_id])
+        query = cur.fetchall()
+        conn.close()
+        if len(query) == 1:
+            data = {
+                "id": query[0][0],
+                "name": query[0][1],
+                "link": query[0][2],
+                "description": query[0][5],
+                "type": query[0][3],
+                "closing": query[0][4].strftime("%m/%d/%Y")
+            }
+            return json.dumps({"success": True, "data": data})
+        else:
+            return json.dumps({"success": False, "message": "Job Not Found!"})
+    except mariadb.DatabaseError:
+        return json.dumps({"success": False, "message": "Error in database operation!"})
+    except Exception as Error:
+        print(f"Error: {Error}")
+        return json.dumps({"success": False, "message": "Internal Server Error!"}), 500
 
 @app.route('/match', methods=['GET'])
 def match_candidates():
