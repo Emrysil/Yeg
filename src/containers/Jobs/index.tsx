@@ -100,7 +100,7 @@ const JobsContainer = () => {
                         </div>
                         <div className="flex flex-col grow gap-4">
                             {
-                                loading 
+                                !loading 
                                 ? (
                                     jobs 
                                     ? (

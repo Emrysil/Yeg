@@ -12,7 +12,7 @@ const CandidateContainer: React.FC<ICandidates> = ({candidates, job, loading}) =
     return (
         <div className="flex flex-col relative items-center justify-center font-rowdis gap-5">
             {
-                loading
+                !loading
                 ? (
                     <>
                         {
