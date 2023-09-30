@@ -123,7 +123,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - candidate id (PK auto increment)
 - name VARCHAR 100
 - gendar CHAR 1
-- birthyear SMALLINT 6
+- age SMALLINT 6
 - education VARCHAR 50
 - skillset VARCHAR 1000
 

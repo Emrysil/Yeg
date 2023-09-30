@@ -24,14 +24,14 @@ CREATE TABLE IF NOT EXISTS `candidate` (
   `candidate_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `gender` char(1) NOT NULL,
-  `birthyear` smallint(6) NOT NULL DEFAULT 0,
+  `age` smallint(6) NOT NULL DEFAULT 0,
   `education` varchar(100) NOT NULL,
   `skillset` varchar(1000) NOT NULL,
   PRIMARY KEY (`candidate_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 -- 正在导出表  psa_db.candidate 的数据：~30 rows (大约)
-INSERT INTO `candidate` (`candidate_id`, `name`, `gender`, `birthyear`, `education`, `skillset`) VALUES
+INSERT INTO `candidate` (`candidate_id`, `name`, `gender`, `age`, `education`, `skillset`) VALUES
 	(32, 'Yunjae Oh', 'F', 26, 'Bachelor of Business Information Systems, Management Information Systems, General', 'Adobe Photoshop, Adobe Premiere Pro, Quality Assurance, User Interviews, Design Library, Information Architecture, Rapid Prototyping, Wireframing, UX Research, Usability Testing, User Experience (UX), MySQL, Java, React.js, Business Strategy, Python (Programming Language), HTML, Cascading Style Sheets (CSS), Figma (Software), PHP'),
 	(33, 'Marcus Yeo', 'M', 27, 'Information Systems, E-Commerce/Electronic Commerce + Digital Innovation', 'Software Development, Start-ups, Information Systems, Leadership, Team Management'),
 	(34, 'Yi Xuan Tong', 'F', 27, 'Bachelor of Social Sciences with Honours, Communications and New Media', 'Social Media Marketing, Creative Writing, Adobe Photoshop, Adobe Illustrator, Teamwork, Basic HTML/CSS/Javascript, Microsoft Excel, Microsoft Word, Microsoft PowerPoint'),
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `hr_users` (
   PRIMARY KEY (`hr_uname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- 正在导出表  psa_db.hr_users 的数据：~3 rows (大约)
+-- 正在导出表  psa_db.hr_users 的数据：~4 rows (大约)
 INSERT INTO `hr_users` (`hr_uname`, `password`) VALUES
 	('lisz', 'lisz'),
 	('lixt', 'lixt'),
