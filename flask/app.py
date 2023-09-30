@@ -146,14 +146,14 @@ def list_jobs():
         for entry in cur.fetchall():
             if not search in entry[1]:
                 continue
-            data.append([
-                entry[0],
-                entry[1],
-                entry[2],
-                entry[3],
-                entry[4].strftime("%m/%d/%Y"),
-                entry[5]
-            ])
+            data.append({
+                "id": entry[0],
+                "name": entry[1],
+                "link": entry[2],
+                "description": entry[5],
+                "type": entry[3],
+                "closing": entry[4].strftime("%m/%d/%Y")
+            })
         conn.close()
         return json.dumps({"success": True, "length": len(data), "data": data})
     except mariadb.DatabaseError:
@@ -165,4 +165,22 @@ def list_jobs():
 
 @app.route('/match', methods=['GET'])
 def match_candidates():
-    return "to be implemented"
+    # Parse parameters
+    try:
+        req_body = request.get_json()
+        req_param = (request.args).to_dict()
+        token = req_body["authorization"]
+        '''
+        add parameters to be loaded here
+        '''
+    except Exception as Error:
+        print(f"Error: {Error}")
+        return json.dumps({"success": False, "message": "Bad Request Parameters!"}), 500
+    # Parse token
+    validation = validate_token(token)
+    if not validation["success"]:
+        return json.dumps(validation), 401
+    '''
+    add other functionality here
+    '''
+    return json.dumps({"success": False, "message": "Not Implemented Yet!"}), 500
