@@ -72,6 +72,9 @@ def match(candidates: list, position: dict):
     for i, candidate in enumerate(sorted_candidates):
         print(f"Rank {i + 1}: {candidate['name']} - Similarity Score: {candidate['score']:.4f}")
 
+    for candiate in sorted_candidates:
+        candiate.pop("score", None)
+
     return sorted_candidates
 
 
