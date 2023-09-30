@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 import mariadb
 import json
 import jwt
+from match import match 
 
 # MariaDB Configuration
 config = {
@@ -167,17 +168,43 @@ def match_candidates():
     try:
         req_body = request.get_json()
         token = request.headers.get('Authorization')
+            # Parse token
+        validation = validate_token(token)
+        if not validation["success"]:
+            return json.dumps(validation), 401
+        job_id = request.args.get("id")
         '''
         add parameters to be loaded here
         '''
+        conn = mariadb.connect(**config)
+        cur = conn.cursor()
+        candidates = []
+        for entry in cur.fetchall():
+            candidates.append({
+                "id": entry[0],
+                "name": entry[1],
+                "gender": entry[2],
+                "birthYear": entry[3],
+                "education": entry[4],
+                "skillSet": entry[5]
+            })
+
+        cur.execute(f"select * from jobs where jobid=?", [job_id])
+        for entry in cur.fetchall():
+            curr_job = {"id": entry[0],
+                "name": entry[1],
+                "link": entry[2],
+                "description": entry[5],
+                "type": entry[3],
+                "closing": entry[4].strftime("%m/%d/%Y")}
+
     except Exception as Error:
         print(f"Error: {Error}")
         return json.dumps({"success": False, "message": "Bad Request Parameters!"}), 500
-    # Parse token
-    validation = validate_token(token)
-    if not validation["success"]:
-        return json.dumps(validation), 401
+
     '''
     add other functionality here
     '''
-    return json.dumps({"success": False, "message": "Not Implemented Yet!"}), 500
+    ranked_candidates = match(candidates, curr_job)
+    return ranked_candidates
+    # return json.dumps({"success": False, "message": "Not Implemented Yet!"}), 500

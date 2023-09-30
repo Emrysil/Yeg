@@ -5,6 +5,21 @@ import spacy
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 
+demo_candidates = [{'id': "1", 
+                'name': "li xintong", 
+                'gender': 'F',
+                'birthYear': 2018,
+                'education': 'Degree',
+                'skillSet': 'Python, Programming, frontend, backend, UI'
+                }, 
+                {'id': "2", 
+                'name': "li sizhuang", 
+                'gender': 'F',
+                'birthYear': 2077,
+                'education': 'Primary School',
+                'skillSet': 'driving, electric engineering, Java'
+                }, 
+                ]
 
 entry = (896, 
          'UX Technical Lead and Designer', 
@@ -26,25 +41,8 @@ p = {"id": entry[0],
 def calculate_fuzzy_match_score(str1, str2):
     return fuzz.ratio(str1, str2)
 
-def match(position: dict):
+def match(candidates: list, position: dict):
     nlp = spacy.load("en_core_web_lg")
-
-    # candidates contains all the candidates in the form of dict
-    candidates = [{'candidate_id': "1", 
-                   'name': "li xintong", 
-                   'gender': 'F',
-                   'birthyear': 2018,
-                   'education': 'Degree',
-                   'skillset': 'Python, Programming, frontend, backend, UI'
-                   }, 
-                   {'candidate_id': "2", 
-                   'name': "li sizhuang", 
-                   'gender': 'F',
-                   'birthyear': 2077,
-                   'education': 'Primary School',
-                   'skillset': 'driving, electric engineering, Java'
-                   }, 
-                   ]
 
     '''
     job_description = position["description"] 
@@ -63,7 +61,7 @@ def match(position: dict):
     tfidf_vectorizer = TfidfVectorizer()
 
     for candidate in candidates:
-        skillset_text = candidate["skillset"]
+        skillset_text = candidate["skillSet"]
         skillset_doc = nlp(skillset_text)
         skillset_processed = " ".join([token.lemma_ for token in skillset_doc])
         tfidf_matrix = tfidf_vectorizer.fit_transform([position_processed, skillset_processed])
@@ -78,6 +76,6 @@ def match(position: dict):
 
 
 if __name__ == '__main__':
-    match(p)
+    match(demo_candidates, p)
 
 
