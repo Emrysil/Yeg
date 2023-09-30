@@ -114,12 +114,10 @@ def sign_up():
 def list_jobs():
     # Parse parameters
     try:
-        req_body = request.get_json()
-        req_param = (request.args).to_dict()
-        token = req_body["authorization"]
-        category = req_param["category"]
-        search = req_param["search"]
-        sorted = req_param["sorted"]
+        token = request.headers.get('Authorization')
+        category = request.args.get("category")
+        search = request.args.get("search")
+        sorted = request.args.get("sorted")
     except Exception as Error:
         print(f"Error: {Error}")
         return json.dumps({"success": False, "message": "Bad Request Parameters!"}), 500
@@ -139,7 +137,7 @@ def list_jobs():
             sort_string = ""
         # Use category filter
         if category != "":
-            cur.execute(f"SELECT * FROM jobs WHERE jobcat=?{sort_string}", [req_param["category"]])
+            cur.execute(f"SELECT * FROM jobs WHERE jobcat=?{sort_string}", [category])
         else:
             cur.execute(f"SELECT * FROM jobs{sort_string}")
         data = []
@@ -168,8 +166,7 @@ def match_candidates():
     # Parse parameters
     try:
         req_body = request.get_json()
-        req_param = (request.args).to_dict()
-        token = req_body["authorization"]
+        token = request.headers.get('Authorization')
         '''
         add parameters to be loaded here
         '''
