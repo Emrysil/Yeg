@@ -5,7 +5,7 @@ export const AuthService = {
         try {
             let res: IAuthResponse;
             res = await Http.Request<IAuthResponse>('POST', '/login', null, payload);
-            localStorage.setItem('jwt-token', res.authorization);
+            localStorage.setItem('jwt-token', res.message);
             return res;
         } catch (err) {
             console.log(err);
