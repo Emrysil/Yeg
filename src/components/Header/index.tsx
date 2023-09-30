@@ -2,23 +2,14 @@
 import Image from "next/image";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { isAuth, clearLocalStorage } from "@/common/utils/storage";
 const Header = () => {
-    const [isLogged, setIsLogged] = useState<boolean>(false);
-    const getLoginStatus = () => {
-        const token = localStorage.getItem('jwt-token');
-        if (token) {
-            setIsLogged(true);
-        }
-    }
+    const isLogged = isAuth();
     const router = useRouter();
     const handleLogout = () => {
-        localStorage.removeItem('jwt-token');
-        router.replace("/jobs");
+        clearLocalStorage();
+        router.replace("/");
     };
-    useEffect(() => {
-        getLoginStatus();
-    }, []);
     return (
         <div className="h-32 w-full bg-background-100 flex px-10 fixed top-0 z-50">
             <div className="w-full max-w-[1392px] m-auto">

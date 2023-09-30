@@ -1,11 +1,11 @@
 import { Http } from "../Http";
-
+import { setTokensLocalStorage } from "@/common/utils/storage";
 export const AuthService = {
     login: async (payload: any): Promise<IAuthResponse> => {
         try {
             let res: IAuthResponse;
             res = await Http.Request<IAuthResponse>('POST', '/login', null, payload);
-            localStorage.setItem('jwt-token', res.message);
+            setTokensLocalStorage(res.message);
             return res;
         } catch (err) {
             console.log(err);

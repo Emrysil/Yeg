@@ -1,4 +1,5 @@
-import { stringify } from "querystring"
+import { stringify } from "querystring";
+import { getTokenLocalStorage } from "@/common/utils/storage";
 const BaseUrl = "http://localhost"
 
 export const Http = {
@@ -17,7 +18,7 @@ export const Http = {
                 mode: 'cors',
             
             }
-            const token = localStorage.getItem('jwt-token');
+            const token = getTokenLocalStorage();
             if (token) {
                 options.headers = {
                     "Content-Type": "application/json",

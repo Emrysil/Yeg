@@ -1,6 +1,5 @@
 'use client'
 import './globals.css';
-import type { Metadata } from 'next';
 import { Rowdies, VT323, IBM_Plex_Sans } from 'next/font/google';
 import Header from '@/components/Header';
 import Head from 'next/head';
