@@ -20,7 +20,7 @@ const Login: React.FC<ILogin> = ({toSignup}) => {
     const handlSubmitForm = async (value: any) => {
         try {
             await AuthService.login(value);
-            router.push("/jobs");
+            router.replace("/jobs");
         } catch (err) {
             openNotification('topRight');
         }
