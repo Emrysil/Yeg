@@ -166,12 +166,15 @@ def list_jobs():
 def match_candidates():
     # Parse parameters
     try:
-        req_body = request.get_json()
+        # Parse token
         token = request.headers.get('Authorization')
-            # Parse token
         validation = validate_token(token)
         if not validation["success"]:
             return json.dumps(validation), 401
+    except Exception as Error:
+        print(f"Error: {Error}")
+        return json.dumps({"success": False, "message": "Bad Request Parameters!"}), 500
+    try:
         job_id = request.args.get("id")
         conn = mariadb.connect(**config)
         cur = conn.cursor()
@@ -185,7 +188,6 @@ def match_candidates():
                 "education": entry[4],
                 "skillSet": entry[5]
             })
-
         cur.execute(f"select * from jobs where jobid=?", [job_id])
         for entry in cur.fetchall():
             curr_job = {"id": entry[0],
@@ -194,10 +196,10 @@ def match_candidates():
                 "description": entry[5],
                 "type": entry[3],
                 "closing": entry[4].strftime("%m/%d/%Y")}
-
+        ranked_candidates = match(candidates, curr_job)
+        return json.dumps({"success": True, "data": ranked_candidates})
+    except mariadb.DatabaseError:
+        return json.dumps({"success": False, "message": "Database Error!"}), 500
     except Exception as Error:
         print(f"Error: {Error}")
-        return json.dumps({"success": False, "message": "Bad Request Parameters!"}), 500
-
-    ranked_candidates = match(candidates, curr_job)
-    return json.dumps({"success": True, "data": ranked_candidates})
+        return json.dumps({"success": False, "message": "Internal Server Error!"}), 500
