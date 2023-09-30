@@ -75,8 +75,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ### /listJobs - Show Jobs based on search parameters
 
 - Request method - POST
-- Request body in JSON format
-    - authorization - JSON Web Token
+- Authorization - JWT in http headers
 - Request params
     - category - A job category to search or empty string (Required)
     - search - A search keyword or empty string (Required)
@@ -94,7 +93,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ### /match - Match candidates based on job description
 
 - Request method - GET
-
+- Authorization - JWT in http headers
 
 ## Database Schema
 
