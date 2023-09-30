@@ -7,17 +7,17 @@ export const JobService = {
             return res.data;
         } catch (err) {
             console.log(err);
-            return [];
+            throw new Error;
         }
     },
-    getJob: async (params: IJobDetailRequest): Promise<IJob | void> => {
+    getJob: async (params: IJobDetailRequest): Promise<IJob> => {
         try {
             let res: IJobDetailResponse;
             res = await Http.Request<IJobDetailResponse>('GET', '/job', params, null);
             return res.data;
         } catch (err) {
             console.log(err);
-            return;
+            throw new Error;
         }
     }
 }
