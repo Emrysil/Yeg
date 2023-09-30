@@ -38,12 +38,11 @@ const JobsContainer = () => {
         setParams(defaultParams);
     }
     useEffect(() => {
-        console.log(params);
-        // handleGetJobs(params);
+        handleGetJobs(params);
     }, [params]);
 
     useEffect(() => {
-        // handleGetJobs(defaultParams);
+        handleGetJobs(defaultParams);
     }, []);
     return (
         <div className="flex flex-col items-center gap-5">
