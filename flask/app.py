@@ -3,10 +3,10 @@ import flask
 from flask import request
 from flask_cors import CORS
 from datetime import datetime, timedelta
+from hashlib import sha256
 import mariadb
 import json
 import jwt
-import csv
 from match import match 
 
 # MariaDB Configuration
@@ -65,9 +65,14 @@ def validate_token(token):
 
 @app.route('/login', methods=['POST'])
 def index():
-    data = request.get_json()
-    hr_uname = data["username"]
-    password = data["password"]
+    try:
+        data = request.get_json()
+        hr_uname = data["username"]
+        password = data["password"]
+        password = sha256(password.encode()).hexdigest()
+    except Exception as Error:
+        print(f"Error {Error}")
+        return json.dumps({"success": False, "message": "Bad Request Parameters!"})
     try:
         conn = mariadb.connect(**config)
         cur = conn.cursor()
@@ -100,6 +105,7 @@ def sign_up():
         cur.execute(f"select * from hr_users where hr_uname=?", [hr_uname])
         if len(cur.fetchall()) > 0:
             return json.dumps({"success": False, "message": "Username already exists!"})
+        password = sha256(password.encode()).hexdigest()
         cur.execute(
             f"insert into hr_users (hr_uname, password) VALUES (?, ?)", (hr_uname, password))
         conn.commit()
