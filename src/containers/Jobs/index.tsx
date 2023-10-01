@@ -21,6 +21,7 @@ const JobsContainer = () => {
             setJobs(res);
             setLoading(false);
         } catch (err) {
+            console.log(err)
             setJobs(null);
         }
     };
