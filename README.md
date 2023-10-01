@@ -147,3 +147,15 @@ Open [http://localhost:7777](http://localhost:7777) with your browser to see the
 - jobcat VARCHAR 100
 - closing TIMESTAMP
 - jobdesc VARCHAR 2000
+
+## Here are some snapshots of our application
+
+### Login Page
+<img width="1652" alt="Screenshot 2023-10-01 at 6 49 15 PM" src="https://github.com/Emrysil/yeg/assets/107340960/3a6f32d0-7534-4f11-b29d-ca18ac66c661">
+
+### Jobs
+<img width="1659" alt="Screenshot 2023-10-01 at 6 49 28 PM" src="https://github.com/Emrysil/yeg/assets/107340960/c61238e3-0290-4688-b652-002d38920e35">
+<img width="1653" alt="Screenshot 2023-10-01 at 6 49 59 PM" src="https://github.com/Emrysil/yeg/assets/107340960/ca57a6c6-09ae-4769-8716-d55c384d9172">
+
+### Suitable Candidates
+<img width="1653" alt="Screenshot 2023-10-01 at 6 49 39 PM" src="https://github.com/Emrysil/yeg/assets/107340960/09895b0a-992b-43af-8b5f-794c4dc52242">
