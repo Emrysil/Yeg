@@ -137,7 +137,7 @@ Open [http://localhost:7777](http://localhost:7777) with your browser to see the
 ### hr_users
 
 - hr_uname VARCHAR 50 (PK)
-- password VARCHAR 50
+- password VARCHAR 100
 
 ### jobs
 
