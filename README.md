@@ -1,14 +1,39 @@
-## Fire up the frontend server
+## Setting up the application
 
-First, ensure you have node version >= 18.17.1
+### Import Database
+1. Set up MariaDB Server
+2. Import the `/flask/dbImport.sql` file using HeidiSQL or MySQL Workbench
+3. Change the MariaDB configuration in `/flask/app.py` under MariaDB Configuration
 
-Then, under the root directory, install project dependencies by runnning any of the following command
+### Back End Server
+
+1. Start a new terminal
+2. Change working directory to /yeg/flask/
+3. Install python dependencies with pip
+   ```
+   PyJWT
+   mariadb
+   flask-cors
+   flask
+   fuzzywuzzy
+   spacy
+   scikit-learn
+   python-Levenshtein
+   ```
+4. Additionally run `python -m spacy download en_core_web_sm`
+5. Run `flask run --host 0.0.0.0 --port 80`
+
+### Front End Server
+
+1. Start a new terminal
+2. Ensure you have node version >= 18.17.1
+3. Under the root directory, install project dependencies by runnning any of the following command
 ```bash
 npm install
 # or
 yarn
 ```
-Finally, run the development server:
+4. Run the development server:
 
 ```bash
 npm run dev
