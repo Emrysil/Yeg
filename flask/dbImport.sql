@@ -66,15 +66,15 @@ INSERT INTO `candidate` (`candidate_id`, `name`, `gender`, `age`, `education`, `
 -- 导出  表 psa_db.hr_users 结构
 CREATE TABLE IF NOT EXISTS `hr_users` (
   `hr_uname` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(100) NOT NULL,
   PRIMARY KEY (`hr_uname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 -- 正在导出表  psa_db.hr_users 的数据：~4 rows (大约)
 INSERT INTO `hr_users` (`hr_uname`, `password`) VALUES
-	('lisz', 'lisz'),
-	('lixt', 'lixt'),
-	('sunyt', 'sunyt');
+	('lisz', '065f8c429aa300792717ba0ca4a93144ff813ad7e8d6ddbca9f79d1f03ca39e6'),
+	('lixt', '6dc1df4748442ffd8323c81b5a3b1a2820a2071ded6d14d0f5850a18fbc6d029'),
+	('sunyt', 'ecb339204f07b8627787c34a27bb0eb46a4d319116ac4cbac44a1a372418557e');
 
 -- 导出  表 psa_db.jobs 结构
 CREATE TABLE IF NOT EXISTS `jobs` (
