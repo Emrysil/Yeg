@@ -8,7 +8,7 @@
 ### Back End Server
 
 1. Start a new terminal
-2. Change working directory to /yeg/flask/
+2. Change working directory to `/yeg/flask/`
 3. Install python dependencies with pip
    ```
    PyJWT
