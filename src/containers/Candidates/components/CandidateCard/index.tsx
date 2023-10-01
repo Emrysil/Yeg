@@ -21,10 +21,11 @@ const CandidateCard: React.FC<{candidate: ICandidate}> = ({candidate}) => {
             color = "cyan";
             text = "Low"
         }
+        text = text + " " + matchingScore + "%";
         return {color, text}
     }, [matchingScore]);
     return (
-        <Badge.Ribbon text={ribbonOptions.text} color={ribbonOptions.color}>
+        <Badge.Ribbon text={<span className="font-rowdis text-[20px] py-2">{ribbonOptions.text}</span>} color={ribbonOptions.color}>
             <Card title={<span className="font-rowdis">{name}</span>}>
                 <div className="flex flex-col font-rowdis gap-2">
                     <div>
