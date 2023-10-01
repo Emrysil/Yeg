@@ -45,8 +45,9 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:7777](http://localhost:7777) with your browser to see the result.
+Open [http://localhost:7777](http://localhost:7777) with your browser to visit the website.
 
+You can create an account to start exploring the rich variety of features YEG has to offer.
 
 ## Flask Endpoints
 
