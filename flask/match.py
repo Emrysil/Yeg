@@ -40,10 +40,10 @@ p = {"id": entry[0],
     "name": entry[1],
     "link": entry[2],
     "description": entry[5],
-    "type": entry[3],
+    "type": entry[3], 
     "closing": entry[4].strftime("%m/%d/%Y")}
 
-# print(p)
+# #print(p)
 
 def calculate_fuzzy_match_score(str1, str2):
     return fuzz.ratio(str1, str2)
@@ -59,7 +59,7 @@ def match(candidates: list, position: dict):
         score = calculate_fuzzy_match_score(job_description, candidate_skillset)
         candidate_scores.append({"candidate": candidate, "score": score})
     sorted_candidates = sorted(candidate_scores, key=lambda x: x["score"], reverse=True)
-    print(candidate_scores)
+    #print(candidate_scores)
     return sorted_candidates
     '''
     position_text = position["description"]
@@ -77,7 +77,8 @@ def match(candidates: list, position: dict):
     sorted_candidates = sorted(candidates, key=lambda x: x["score"], reverse=True)
 
     for i, candidate in enumerate(sorted_candidates):
-        print(f"Rank {i + 1}: {candidate['name']} - Similarity Score: {candidate['score']:.4f}")
+        #print(f"Rank {i + 1}: {candidate['name']} - Similarity Score: {candidate['score']:.4f}")
+        pass
 
     scores = [d["score"] for d in sorted_candidates]
     n = len(scores)
@@ -85,7 +86,8 @@ def match(candidates: list, position: dict):
     for d in sorted_candidates:
         d["matchingScore"] = "{:.1f}".format(d["score"] / max_score * 100)
     for d in sorted_candidates:
-        print(d)
+        #print(d)
+        pass
     for candiate in sorted_candidates:
         candiate.pop("score", None)
 

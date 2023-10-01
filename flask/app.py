@@ -72,7 +72,7 @@ def index():
         password = sha256(password.encode()).hexdigest()
     except Exception as Error:
         print(f"Error {Error}")
-        return json.dumps({"success": False, "message": "Bad Request Parameters!"})
+        return json.dumps({"success": False, "message": "Bad Request Parameters!"}), 400
     try:
         conn = mariadb.connect(**config)
         cur = conn.cursor()
@@ -81,14 +81,14 @@ def index():
             (hr_uname, password)
         )
         if len(cur.fetchall()) != 1:
-            return json.dumps({"success": False, "message": "Incorrect Username or Password!"})
+            return json.dumps({"success": False, "message": "Incorrect Username or Password!"}), 401
         conn.close()
         jwt_response = generate_jwt(hr_uname)
         if not jwt_response["success"]:
-            return json.dumps({"success": False, "message": "Failed to generate token!"})
+            return json.dumps({"success": False, "message": "Failed to generate token!"}), 400
         return json.dumps({"success": True, "message": jwt_response["token"]})
     except mariadb.DatabaseError:
-        return json.dumps({"success": False, "message": "Error in database operation!"})
+        return json.dumps({"success": False, "message": "Error in database operation!"}), 500
     except Exception as Error:
         print(f"Error: {Error}")
         return json.dumps({"success": False, "message": "Internal Server Error!"}), 500
@@ -104,7 +104,7 @@ def sign_up():
         cur = conn.cursor()
         cur.execute(f"select * from hr_users where hr_uname=?", [hr_uname])
         if len(cur.fetchall()) > 0:
-            return json.dumps({"success": False, "message": "Username already exists!"})
+            return json.dumps({"success": False, "message": "Username already exists!"}), 500
         password = sha256(password.encode()).hexdigest()
         cur.execute(
             f"insert into hr_users (hr_uname, password) VALUES (?, ?)", (hr_uname, password))
@@ -112,7 +112,7 @@ def sign_up():
         conn.close()
         return json.dumps({"success": True, "message": None})
     except mariadb.DatabaseError:
-        return json.dumps({"success": False, "message": "User creation failed!"})
+        return json.dumps({"success": False, "message": "User creation failed!"}), 500
     except Exception as Error:
         print(f"Error: {Error}")
         return json.dumps({"success": False, "message": "Internal Server Error!"}), 500
@@ -163,7 +163,7 @@ def list_jobs():
         conn.close()
         return json.dumps({"success": True, "length": len(data), "data": data})
     except mariadb.DatabaseError:
-        return json.dumps({"success": False, "message": "Error in database operation!"})
+        return json.dumps({"success": False, "message": "Error in database operation!"}), 500
     except Exception as Error:
         print(f"Error: {Error}")
         return json.dumps({"success": False, "message": "Internal Server Error!"}), 500
@@ -201,7 +201,7 @@ def get_job_by_id():
         else:
             return json.dumps({"success": False, "message": "Job Not Found!"})
     except mariadb.DatabaseError:
-        return json.dumps({"success": False, "message": "Error in database operation!"})
+        return json.dumps({"success": False, "message": "Error in database operation!"}), 500
     except Exception as Error:
         print(f"Error: {Error}")
         return json.dumps({"success": False, "message": "Internal Server Error!"}), 500
