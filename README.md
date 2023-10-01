@@ -3,6 +3,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Getting Started
 
 First, ensure you have node version >= 18.17.1
+
 Then, install project dependencies
 ```bash
 npm install
