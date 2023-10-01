@@ -6,7 +6,9 @@ const JobCard: React.FC<IJob> = ({id, name, link, description, type, closing}) =
     const ribbonColor = categories.find(cat => cat.label === type)?.color;
     const requirementProcessed: string[] = description.split('.');
     return (
-        <Badge.Ribbon text={type} color={ribbonColor}>
+        <Badge.Ribbon text={
+            <span className="font-rowdis text-[20px]">{type}</span>
+        } color={ribbonColor}>
             <Card title={<span className="font-rowdis">{name}</span>}>
                 <div className="flex flex-col gap-4">
                     <Collapse 
