@@ -216,6 +216,7 @@ def match_candidates():
         job_id = request.args.get("id")
         conn = mariadb.connect(**config)
         cur = conn.cursor()
+        cur.execute(f"select * from candidate")
         candidates = []
         for entry in cur.fetchall():
             candidates.append({
@@ -226,6 +227,8 @@ def match_candidates():
                 "education": entry[4],
                 "skillSet": entry[5]
             })
+        print("candidates-------------------------")
+        print(candidates)
         cur.execute(f"select * from jobs where jobid=?", [job_id])
         for entry in cur.fetchall():
             curr_job = {"id": entry[0],
@@ -234,7 +237,10 @@ def match_candidates():
                 "description": entry[5],
                 "type": entry[3],
                 "closing": entry[4].strftime("%m/%d/%Y")}
+        print("curr_job--------------------------")
+        print(curr_job)
         ranked_candidates = match(candidates, curr_job)
+        print(ranked_candidates)
         return json.dumps({"success": True, "data": ranked_candidates})
     except mariadb.DatabaseError:
         return json.dumps({"success": False, "message": "Database Error!"}), 500
